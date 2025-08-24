@@ -154,7 +154,9 @@
     audio = document.getElementById("bg-music");
     audio.addEventListener("loadmetadata", () => {
       audio.volume = 0.4;
-      audio.currentTime = 100;
+      audio.addEventListener('canplaythrough', () => {
+        audio.currentTime = 100;
+        audio.play();
     });
     </script>
 
@@ -219,6 +221,7 @@
   </script>
 </body>
 </html>
+
 
 
 
