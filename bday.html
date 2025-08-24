@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday 💖</title>
+  
+  <!-- Google Fonts for better typography -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Montserrat:wght@400;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* CSS Variables for easy color changes */
+    :root {
+      --bg-color-start: #ffb6c1; /* Light Pink */
+      --bg-color-end: #dda0dd;   /* Plum */
+      --extra-color: #f0e68c;    /* Khaki */
+      --primary-glow: #ff69b4;   /* Hot Pink */
+      --secondary-glow: #ba55d3; /* Medium Orchid */
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Montserrat', sans-serif;
+      background: linear-gradient(135deg, var(--bg-color-start), var(--bg-color-end), var(--extra-color));
+      background-size: 400% 400%;
+      animation: backgroundShift 15s ease infinite;
+      color: #fff;
+      text-align: center;
+      overflow-x: hidden;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      animation: fadeIn 2s ease-in-out forwards;
+    }
+    
+    @keyframes backgroundShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    h1 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 3.5rem;
+      margin-top: 60px;
+      animation: glow 2s infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 10px #fff, 0 0 20px var(--primary-glow); }
+      to { text-shadow: 0 0 20px #fff, 0 0 40px var(--secondary-glow); }
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      max-width: 700px;
+      margin: 60px auto 30px;
+    }
+
+    .message {
+      font-size: 1.3rem;
+      margin: 20px auto;
+      line-height: 1.5;
+    }
+
+    .gallery {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 15px;
+      margin: 40px auto;
+      max-width: 900px;
+      padding: 0 10px;
+    }
+
+    .gallery img {
+      width: 250px;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 15px;
+      box-shadow: 
+        0 4px 15px rgba(0,0,0,0.2), 
+        0 0 10px rgba(255,255,255,0.4) inset;
+      transition: transform 0.3s, box-shadow 0.3s;
+      cursor: pointer;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.05);
+      box-shadow: 
+        0 6px 20px rgba(0,0,0,0.4), 
+        0 0 15px rgba(255,255,255,0.6) inset;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 10;
+    }
+
+    @media (max-width: 768px) {
+      h1 { font-size: 2.5rem; }
+      .message { font-size: 1rem; }
+      .gallery img { width: 100%; height: auto; }
+      .card { margin: 30px 10px; padding: 20px; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="heart-canvas"></canvas>
+
+  <div class="card">
+    <h1>🎂 Happy Birthday, My Love 💖</h1>
+    <p class="message">
+      You make my world brighter every single day.  
+      Wishing you endless happiness, love, and laughter today & always.  
+      💕 Forever yours.
+    </p>
+  </div>
+
+  <div class="gallery">
+    <!-- Replace these with your own photo URLs -->
+    <img src="p1.jpg" alt="P 1">
+    <img src="p2.jpg" alt="P 2">
+    <img src="p3.jpg" alt="P 3">
+    <img src="p10.png" alt="P 5">
+    <img src="p11.png" alt="P 6">
+    <img src="p6.jpg" alt="P 7">
+  </div>
+
+  <audio autoplay loop>
+    <source src="perfect.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
+  <script>
+    // Heart particles script
+    const canvas = document.getElementById("heart-canvas");
+    const ctx = canvas.getContext("2d");
+    
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    const hearts = [];
+    const heartCount = 100;
+
+    for (let i = 0; i < heartCount; i++) {
+        hearts.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            size: Math.random() * 8 + 4,
+            speed: Math.random() * 1.5 + 0.5,
+            color: `hsl(${Math.random() * 30 + 330}, 80%, 70%)`,
+            angle: Math.random() * Math.PI * 2
+        });
+    }
+
+    function drawHearts() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      hearts.forEach(p => {
+        ctx.beginPath();
+        ctx.fillStyle = p.color;
+        ctx.save();
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.angle);
+        ctx.moveTo(0, 0);
+        ctx.bezierCurveTo(p.size, -p.size, p.size * 2, p.size / 2, 0, p.size * 2);
+        ctx.bezierCurveTo(-p.size * 2, p.size / 2, -p.size, -p.size, 0, 0);
+        ctx.fill();
+        ctx.restore();
+      });
+      updateHearts();
+    }
+
+    function updateHearts() {
+      hearts.forEach(p => {
+        p.y -= p.speed; // Move upwards
+        p.x += Math.sin(p.angle) * 0.5; // Add a gentle side-to-side drift
+        p.angle += 0.01;
+
+        if (p.y < -p.size * 2) {
+          p.y = canvas.height + p.size * 2;
+          p.x = Math.random() * canvas.width;
+          p.angle = Math.random() * Math.PI * 2;
+        }
+      });
+    }
+
+    setInterval(drawHearts, 30);
+  </script>
+</body>
+</html>
