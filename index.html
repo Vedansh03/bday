@@ -150,6 +150,13 @@
     <source src="song.mp3" type="audio/mp3">
     Your browser does not support the audio element.
   </audio>
+  <script>
+    const audio = document.getElementById("bg-music");
+    audio.addEventListener("loadmetadata", () => {
+      audio.volume = 0.2; // Set volume to 20%
+      audio.currentTime = 95;
+    });
+    </script>
 
   <script>
     // Heart particles script
